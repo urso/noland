@@ -1,0 +1,39 @@
+{
+  "name": "04_create_references_keywords_table",
+  "operations": [
+    {
+      "create_table": {
+        "name": "references_keywords",
+        "columns": [
+          {
+            "name": "reference_id",
+            "type": "uuid",
+            "references": {
+              "name": "references_keywords_reference_id_fkey",
+              "table": "references",
+              "column": "id",
+              "on_delete": "cascade"
+            }
+          },
+          {
+            "name": "keyword_id",
+            "type": "integer",
+            "references": {
+              "name": "references_keywords_keyword_id_fkey",
+              "table": "keywords",
+              "column": "id",
+              "on_delete": "cascade"
+            }
+          }
+        ],
+        "constraints": [
+            {
+                "name": "references_keywords_pkey",
+                "type": "primary_key",
+                "columns": ["reference_id", "keyword_id"]
+            }
+        ]
+      }
+    }
+  ]
+} 

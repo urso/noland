@@ -1,0 +1,46 @@
+{
+  "name": "01_create_references_table",
+  "operations": [
+    {
+      "create_table": {
+        "name": "references",
+        "columns": [
+          {
+            "name": "id",
+            "type": "uuid",
+            "pk": true,
+            "default": "gen_random_uuid()"
+          },
+          {
+            "name": "type",
+            "type": "text"
+          },
+          {
+            "name": "source",
+            "type": "text"
+          },
+          {
+            "name": "title",
+            "type": "text",
+            "nullable": true
+          },
+          {
+            "name": "summary",
+            "type": "text",
+            "nullable": true
+          },
+          {
+            "name": "indexed",
+            "type": "boolean",
+            "default": "false"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone",
+            "default": "now()"
+          }
+        ]
+      }
+    }
+  ]
+}

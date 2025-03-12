@@ -1,0 +1,22 @@
+{
+  "name": "03_create_keywords_table",
+  "operations": [
+    {
+      "create_table": {
+        "name": "keywords",
+        "columns": [
+          {
+            "name": "id",
+            "type": "serial",
+            "pk": true
+          },
+          {
+            "name": "keyword",
+            "type": "text",
+            "unique": true
+          }
+        ]
+      }
+    }
+  ]
+} 

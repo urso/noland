@@ -1,27 +1,48 @@
 {
-  "name": "hackaton",
+  "name": "noland",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "next dev --turbo",
+    "build": "next build --turbo",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate": "maki roll migrate migrations",
+    "migrate:complete": "maki roll complete",
+    "migrate:status": "maki roll status",
+    "migrate:rollback": "maki roll rollback",
+    "api": "cd api && ../.venv/bin/python main.py",
+    "api:dev": "cd api && DEBUG=true RELOAD=true .venv/bin/python main.py",
+    "dev:all": "concurrently \"pnpm run dev\" \"pnpm run api:dev\""
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.2"
+    "@ai-sdk/react": "^1.1.21",
+    "@radix-ui/react-dialog": "^1.1.6",
+    "@radix-ui/react-separator": "^1.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.479.0",
+    "next": "^14.2.24",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "concurrently": "^9.1.2",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "14.1.0",
     "tailwindcss": "^4",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.2",
-    "@eslint/eslintrc": "^3"
+    "ts-node": "^10.9.2",
+    "turbo": "^2.4.4",
+    "typescript": "^5"
   }
 }

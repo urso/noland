@@ -10,6 +10,10 @@
 !.yarn/releases
 !.yarn/versions
 
+# pnpm
+.pnpm-store/
+.pnpm-debug.log*
+
 # testing
 /coverage
 
@@ -23,15 +27,33 @@
 # misc
 .DS_Store
 *.pem
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# debug
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +61,39 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env
+.env.local
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.egg-info/
+.installed.cfg
+*.egg
+
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Jupyter Notebook
+.ipynb_checkpoints

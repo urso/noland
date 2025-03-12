@@ -1,0 +1,15 @@
+{
+  "name": "02_references_table_content",
+  "operations": [
+    {
+      "add_column": {
+        "table": "references",
+        "column": {
+          "name": "contents",
+          "type": "text",
+          "nullable": true
+        }
+      }
+    }
+  ]
+}
