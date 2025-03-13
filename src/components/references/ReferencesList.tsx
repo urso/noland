@@ -1,7 +1,11 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import ReferenceCard, { Reference } from './ReferenceCard';
 
-export default function ReferencesList() {
+interface ReferencesListProps {
+  selectedTags: string[];
+}
+
+export default function ReferencesList({ selectedTags }: ReferencesListProps) {
   const [references, setReferences] = useState<Reference[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -10,7 +14,12 @@ export default function ReferencesList() {
 
   const fetchReferences = useCallback(async () => {
     try {
-      const response = await fetch('/api/references');
+      // Include selected tags in the API request if any are selected
+      const queryParams = selectedTags.length > 0 
+        ? `?keywords=${selectedTags.join(',')}` 
+        : '';
+      
+      const response = await fetch(`/api/references${queryParams}`);
       if (!response.ok) {
         throw new Error('Failed to fetch references');
       }
@@ -35,7 +44,7 @@ export default function ReferencesList() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [selectedTags]); // Re-fetch when selected tags change
 
   const startPolling = useCallback(() => {
     // Clear any existing interval first
@@ -84,12 +93,25 @@ export default function ReferencesList() {
   }
 
   if (references.length === 0) {
-    return <div className="py-4 text-muted-foreground">No references found. Add your first reference above.</div>;
+    return (
+      <div className="py-4 text-muted-foreground">
+        {selectedTags.length > 0 
+          ? "No references found matching the selected tags." 
+          : "No references found. Add your first reference above."}
+      </div>
+    );
   }
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold">Your References</h2>
+      <h2 className="text-lg font-semibold">
+        Your References
+        {selectedTags.length > 0 && (
+          <span className="text-sm font-normal text-gray-500 ml-2">
+            (Filtered by: {selectedTags.map(tag => tag.replace(/_/g, ' ')).join(', ')})
+          </span>
+        )}
+      </h2>
       {hasUnindexedRef.current && (
         <div className="text-sm text-amber-600 bg-amber-50 p-2 rounded-md">
           Some references are still being processed. The list will automatically update when complete.

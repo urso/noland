@@ -244,10 +244,11 @@ async def reindex_reference(reference_id: str):
     return reindexed
 
 @app.get("/api/keywords/counts")
-async def get_keywords_counts() -> dict[str, int]:
-    """Get counts of keywords in references"""
-    logger.info("Getting keyword counts")
-    return await ai.keywords.async_get_keywords_counts()
+async def get_keywords_counts(selected_tags: str | None = None) -> dict[str, int]:
+    """Get counts of keywords in references, optionally filtered by selected tags"""
+    logger.info(f"Getting keyword counts with selected tags filter: {selected_tags}")
+    selected_tags_list = selected_tags.split(',') if selected_tags else None
+    return await ai.keywords.async_get_keywords_counts(selected_tags=selected_tags_list)
     
 if __name__ == "__main__":
     print(f"Starting server on http://{env.HOST}:{env.PORT}")

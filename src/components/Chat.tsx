@@ -1,16 +1,46 @@
 "use client";
 
 import { useChat } from '@ai-sdk/react';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Send } from 'lucide-react';
 
-export default function Chat() {
+// ChatHello component for welcome content
+interface ChatHelloProps {
+  title?: string;
+  description?: string;
+  children?: ReactNode;
+  className?: string;
+}
+
+export function ChatHello({ 
+  title = "Welcome to AI Chat", 
+  description = "Start a conversation by typing a message below.",
+  children,
+  className = ""
+}: ChatHelloProps) {
+  return (
+    <div className={`text-center ${className}`}>
+      {title && <h2 className="text-2xl font-bold">{title}</h2>}
+      {description && <p className="text-muted-foreground mt-2">{description}</p>}
+      {children && <div className="mt-4">{children}</div>}
+    </div>
+  );
+}
+
+interface ChatProps {
+  api?: string;
+  streamProtocol?: 'text' | 'data';
+  children?: ReactNode;
+  className?: string;
+}
+
+export default function Chat({ api, streamProtocol, children, className = '' }: ChatProps) {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: '/api/chat',
-    streamProtocol: 'text',
+    api: api || '/api/chat',
+    streamProtocol: streamProtocol || 'text',
   });
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -21,14 +51,11 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className={`flex flex-col ${className || 'h-screen'}`}>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.length === 0 ? (
+        {messages.length === 0 && children ? (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold">Welcome to AI Chat</h2>
-              <p className="text-muted-foreground mt-2">Start a conversation by typing a message below.</p>
-            </div>
+            {children}
           </div>
         ) : (
           messages.map((message) => (

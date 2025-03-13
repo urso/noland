@@ -64,11 +64,11 @@ class ReferenceStore:
                     result = await conn.fetch(f'''
                         SELECT DISTINCT r.{select_fields}
                         FROM "references" r
-                        INNER JOIN reference_keywords rk ON r.id = rk.reference_id
+                        INNER JOIN references_keywords rk ON r.id = rk.reference_id
                         INNER JOIN keywords k ON rk.keyword_id = k.id
-                        WHERE k.name = ANY($1)
+                        WHERE k.keyword = ANY($1)
                         GROUP BY r.id, r.{select_fields}
-                        HAVING COUNT(DISTINCT k.name) = array_length($1, 1)
+                        HAVING COUNT(DISTINCT k.keyword) = array_length($1, 1)
                         ORDER BY r.created_at DESC
                     ''', keywords)
                 else:
